@@ -1,8 +1,18 @@
+// src/components/PDFConverter.js
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { 
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Alert,
+  AlertDescription
+} from '@mui/material'; // Using MUI as an example - replace with your UI library
 import { Upload, FileText, Image, Combine } from 'lucide-react';
 
 const PDFConverter = () => {
@@ -23,12 +33,33 @@ const PDFConverter = () => {
     setError('');
     setSuccess('');
 
-    // Simulated conversion delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      // Simulated conversion delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // In a real app, you would handle the conversion here
-    setSuccess(`Successfully converted ${selectedFiles.length} file(s) to ${type}`);
-    setConverting(false);
+      // In a real app, you would handle the conversion here
+      // Example API call:
+      /*
+      const formData = new FormData();
+      selectedFiles.forEach(file => {
+        formData.append('files', file);
+      });
+      formData.append('convertTo', type);
+
+      const response = await fetch('http://localhost:5000/api/convert', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Conversion failed');
+      */
+
+      setSuccess(`Successfully converted ${selectedFiles.length} file(s) to ${type}`);
+    } catch (err) {
+      setError(err.message || 'Conversion failed');
+    } finally {
+      setConverting(false);
+    }
   };
 
   const handleMerge = async () => {
@@ -41,12 +72,17 @@ const PDFConverter = () => {
     setError('');
     setSuccess('');
 
-    // Simulated merge delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      // Simulated merge delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // In a real app, you would handle the merge here
-    setSuccess(`Successfully merged ${selectedFiles.length} files`);
-    setConverting(false);
+      // In a real app, you would handle the merge here
+      setSuccess(`Successfully merged ${selectedFiles.length} files`);
+    } catch (err) {
+      setError(err.message || 'Merge failed');
+    } finally {
+      setConverting(false);
+    }
   };
 
   return (
